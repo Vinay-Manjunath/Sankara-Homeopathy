@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clinic Website</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome (if needed) -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Styles -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+      overflow: hidden;
+    }
+
+    body {
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+      transition: background-color 1s ease-in-out;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #b7e8ed;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .navbar-brand img {
+      height: 32px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: #333 !important;
+      margin-right: 15px;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: #0077cc !important;
+    }
+
+    .nav-link:focus::after,
+    .nav-link:active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background-color: #0077cc;
+    }
+
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        position: absolute;
+        top: 56px;
+        left: 0;
+        width: 100%;
+        background-color: #b7e8ed;
+        z-index: 999;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+    }
+
+    /* Page Sections */
+    .page-section {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 100px 40px 40px;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px;
+      text-align: center;
+      transition: background 0.6s ease;
+    }
+
+
+    .page-section p {
+      max-width: 700px;
+      font-size: 1.2rem;
+    }
+
+    /* Section Backgrounds */
+    #section1 {
+      background-color: #F5FFFA;
+    }
+
+    
+    #section2 {
+      background-image: url('images/homeopathy1.jpg');
+    }
+
+    #section3 {
+      background-image: url('images/homoeopathy2.jpg');
+    }
+
+    #section4 {
+      background-image: url('images/homoeopathy3.jpg');
+    }
+
+    #section5 {
+      background-image: url('images/homoeopathy5.jpg');
+    }
+
+    #section6 {
+      background-image: url('images/homoeopathy7.jpg');
+      color: black;
+    }
+
+    #section7 {
+      background-image: url('images/homoeopathy4.jpg');
+    }
+
+    #section6 {
+      background-image: url('images/homoeopathy7.jpg'); /* change to your image */
+    }
+
+    #about {
+      background-image: url('images/homoeopathy8.jpg'); /* replace with actual URL */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+    }
+
+    
+    .appointment-box {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 15px;
+      padding: 40px 30px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #appointmentForm input,
+    #appointmentForm textarea {
+      border-radius: 8px;
+    }
+
+    #appointmentForm .btn {
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+
+    #section7 h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+
+    .page-section .content {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s ease;
+    }
+
+    .page-section.visible .content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero Section Content */
+    #section1 .hero-container img {
+      max-width: 80%;
+      height: auto;
+    }
+
+    #section1 .social-buttons {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-buttons a {
+      text-decoration: none;
+      border-radius: 50%;
+      padding: 12px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .social-buttons a:hover {
+      background-color: #0077cc;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 576px) {
+      #section1 .hero-container img {
+        max-width: 90%;
+      }
+
+      .social-buttons {
+        bottom: 20px;
+        gap: 15px;
+      }
+
+      .social-buttons a {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page-section1 {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 100px 40px 40px;
+      text-align: center;
+      transition: background 0.6s ease;
+      position: relative;
+      color: white;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .page-section1::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+      z-index: 1;
+    }
+
+    .page-section1 .content {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    .process-box {
+      background: rgba(0, 0, 0, 0.6); /* Darker box */
+      border: none;
+      border-radius: 12px;
+      padding: 30px 0px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      color: #fff;
+    }
+
+
+    .process-box h4 {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .process-box p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .process-box {
+        margin-bottom: 20px;
+      }
+    }
+
+      .custom-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 200px;
+  }
+
+  .nav-item.dropdown:hover .custom-dropdown {
+    display: block;
+  }
+
+  .custom-dropdown .dropdown-item {
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .custom-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #000;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand" href="#" onclick="location.reload()">
+      <img src="logo2.png" alt="Clinic Logo" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSection('home')">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSection('about')">About Us</a> <!-- completely different content -->
+        </li>
+        <li class="nav-item dropdown" style="position: relative;">
+        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button">
+          Services
+        </a>
+        <ul class="dropdown-menu custom-dropdown" aria-labelledby="servicesDropdown">
+          <li><a class="dropdown-item" href="#">Chronic Disease</a></li>
+          <li><a class="dropdown-item" href="#">Acute Illness</a></li>
+          <li><a class="dropdown-item" href="#">Women Health</a></li>
+          <li><a class="dropdown-item" href="#">Child Health</a></li>
+          <li><a class="dropdown-item" href="#">Stress Management</a></li>
+          <li><a class="dropdown-item" href="#">Preventive Care</a></li>
+        </ul>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="home">
+  <!-- Section 1: Hero -->
+  <div class="page-section" id="section1">
+    <div class="hero-container text-center">
+      <img src="logo2.png" alt="Clinic Logo" />
+    </div>
+    <div class="social-buttons">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/message/D4EGYZ2K4EOWB1" target="_blank" rel="noopener" title="Go to WhatsApp page" class="social-icons__link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.4054 3.4875C18.1607 1.2375 15.1714 0 11.9946 0C5.4375 0 0.101786 5.33571 0.101786 11.8929C0.101786 13.9875 0.648214 16.0339 1.6875 17.8393L0 24L6.30536 22.3446C8.04107 23.2929 9.99643 23.7911 11.9893 23.7911H11.9946C18.5464 23.7911 24 18.4554 24 11.8982C24 8.72143 22.65 5.7375 20.4054 3.4875ZM11.9946 21.7875C10.2161 21.7875 8.475 21.3107 6.95893 20.4107L6.6 20.1964L2.86071 21.1768L3.85714 17.5286L3.62143 17.1536C2.63036 15.5786 2.11071 13.7625 2.11071 11.8929C2.11071 6.44464 6.54643 2.00893 12 2.00893C14.6411 2.00893 17.1214 3.0375 18.9857 4.90714C20.85 6.77679 21.9964 9.25714 21.9911 11.8982C21.9911 17.3518 17.4429 21.7875 11.9946 21.7875ZM17.4161 14.3839C17.1214 14.2339 15.6589 13.5161 15.3857 13.4196C15.1125 13.3179 14.9143 13.2696 14.7161 13.5696C14.5179 13.8696 13.95 14.5339 13.7732 14.7375C13.6018 14.9357 13.425 14.9625 13.1304 14.8125C11.3839 13.9393 10.2375 13.2536 9.08571 11.2768C8.78036 10.7518 9.39107 10.7893 9.95893 9.65357C10.0554 9.45536 10.0071 9.28393 9.93214 9.13393C9.85714 8.98393 9.2625 7.52143 9.01607 6.92679C8.775 6.34821 8.52857 6.42857 8.34643 6.41786C8.175 6.40714 7.97679 6.40714 7.77857 6.40714C7.58036 6.40714 7.25893 6.48214 6.98571 6.77679C6.7125 7.07679 5.94643 7.79464 5.94643 9.25714C5.94643 10.7196 7.0125 12.1339 7.15714 12.3321C7.30714 12.5304 9.25179 15.5304 12.2357 16.8214C14.1214 17.6357 14.8607 17.7054 15.8036 17.5661C16.3768 17.4804 17.5607 16.8482 17.8071 16.1518C18.0536 15.4554 18.0536 14.8607 17.9786 14.7375C17.9089 14.6036 17.7107 14.5286 17.4161 14.3839Z" />
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#E1306C" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.0027 5.84808C8.59743 5.84808 5.85075 8.59477 5.85075 12C5.85075 15.4053 8.59743 18.1519 12.0027 18.1519C15.4079 18.1519 18.1546 15.4053 18.1546 12C18.1546 8.59477 15.4079 5.84808 12.0027 5.84808ZM12.0027 15.9996C9.80212 15.9996 8.00312 14.2059 8.00312 12C8.00312 9.7941 9.79677 8.00046 12.0027 8.00046C14.2086 8.00046 16.0022 9.7941 16.0022 12C16.0022 14.2059 14.2032 15.9996 12.0027 15.9996ZM19.8412 5.59644C19.8412 6.39421 19.1987 7.03135 18.4062 7.03135C17.6085 7.03135 16.9713 6.38885 16.9713 5.59644C16.9713 4.80402 17.6138 4.16153 18.4062 4.16153C19.1987 4.16153 19.8412 4.80402 19.8412 5.59644ZM23.9157 7.05277C23.8247 5.13063 23.3856 3.42801 21.9775 2.02522C20.5747 0.622429 18.8721 0.183388 16.9499 0.0870135C14.9689 -0.0254238 9.03112 -0.0254238 7.05008 0.0870135C5.1333 0.178034 3.43068 0.617075 2.02253 2.01986C0.614389 3.42265 0.180703 5.12527 0.0843279 7.04742C-0.0281093 9.02845 -0.0281093 14.9662 0.0843279 16.9472C0.175349 18.8694 0.614389 20.572 2.02253 21.9748C3.43068 23.3776 5.12794 23.8166 7.05008 23.913C9.03112 24.0254 14.9689 24.0254 16.9499 23.913C18.8721 23.822 20.5747 23.3829 21.9775 21.9748C23.3803 20.572 23.8193 18.8694 23.9157 16.9472C24.0281 14.9662 24.0281 9.03381 23.9157 7.05277ZM21.3564 19.0728C20.9388 20.1223 20.1303 20.9307 19.0755 21.3537C17.496 21.9802 13.7481 21.8356 12.0027 21.8356C10.2572 21.8356 6.50396 21.9748 4.92984 21.3537C3.88042 20.9361 3.07195 20.1276 2.64897 19.0728C2.02253 17.4934 2.16709 13.7455 2.16709 12C2.16709 10.2546 2.02789 6.50129 2.64897 4.92717C3.06659 3.87776 3.87507 3.06928 4.92984 2.6463C6.50931 2.01986 10.2572 2.16443 12.0027 2.16443C13.7481 2.16443 17.5014 2.02522 19.0755 2.6463C20.1249 3.06392 20.9334 3.8724 21.3564 4.92717C21.9828 6.50665 21.8383 10.2546 21.8383 12C21.8383 13.7455 21.9828 17.4987 21.3564 19.0728Z"/>
+        </svg>
+      </a>
+
+      <!-- YouTube -->
+      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube">
+        <svg width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a2.87 2.87 0 0 0-2.02-2.02C19.734 3.6 12 3.6 12 3.6s-7.735 0-9.478.566a2.87 2.87 0 0 0-2.02 2.02A29.94 29.94 0 0 0 0 12a29.94 29.94 0 0 0 .502 5.814 2.87 2.87 0 0 0 2.02 2.02c1.743.566 9.478.566 9.478.566s7.734 0 9.478-.566a2.87 2.87 0 0 0 2.02-2.02A29.94 29.94 0 0 0 24 12a29.94 29.94 0 0 0-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://facebook.com/yourpage" target="_blank" title="Facebook">
+        <svg width="24" height="24" fill="#1877F2" viewBox="0 0 24 24">
+          <path d="M24 12.0726C24 5.44354 18.629 0.0725708 12 0.0725708C5.37097 0.0725708 0 5.44354 0 12.0726C0 18.0619 4.38823 23.0264 10.125 23.9274V15.5414H7.07661V12.0726H10.125V9.4287C10.125 6.42144 11.9153 4.76031 14.6574 4.76031C15.9706 4.76031 17.3439 4.99451 17.3439 4.99451V7.94612H15.8303C14.34 7.94612 13.875 8.87128 13.875 9.82015V12.0726H17.2031L16.6708 15.5414H13.875V23.9274C19.6118 23.0264 24 18.0619 24 12.0726Z" />
+        </svg>
+      </a>
+    </div>
+    </div>
+</div>
+
+  <!-- Section 2: About Homeopathy -->
+  <div class="page-section1" id="section2">
+  <div class="content animate-on-scroll">
+    <h2>About Homoeopathy</h2>
+    <p>Homeopathy is a holistic system of medicine...</p>
+  </div>
+</div>
+
+<div class="page-section1" id="section3">
+  <div class="content animate-on-scroll">
+    <h2>Our Mission</h2>
+    <p>Our mission is to provide safe, natural...</p>
+  </div>
+</div>
+
+  <!-- Section 4: Why Choose Homeopathy -->
+  <div class="page-section1" id="section4">
+    <div class="content animate-on-scroll">
+      <h2>Why Choose Homeopathy?</h2>
+      <p>Homeopathy is non-toxic, non-invasive, and suitable for all age groups...</p>
+    </div>
+</div>
+
+  <div class="page-section1" id="section5">
+  <div class="container content animate-on-scroll">
+    <h2 class="text-center mb-5">Our Process</h2>
+
+    <!-- Step 1: Left -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="process-box">
+          <h4>1. Comprehensive Consultation</h4>
+          <p>We take time to understand your full health history and current concerns.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Middle -->
+    <div class="row mb-4">
+      <div class="col-md-4 offset-md-4">
+        <div class="process-box">
+          <h4>2. Personalized Remedy Selection</h4>
+          <p>We match remedies tailored to your body and symptoms.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Right -->
+    <div class="row mb-4">
+      <div class="col-md-4 offset-md-8">
+        <div class="process-box">
+          <h4>3. Follow-up & Support</h4>
+          <p>Continued care ensures the best long-term outcome for your health.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="page-section1" id="section6">
+  <div class="container content animate-on-scroll">
+    <div class="appointment-box row align-items-center">
+      
+      <!-- Left: Heading -->
+      <div class="col-md-6 mb-4 mb-md-0">
+        <h2 class="text-md-start text-center">Book Appointment</h2>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="col-md-6">
+        <form id="appointmentForm">
+          <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Enter your name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" rows="3" placeholder="Type your message..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label d-block">Consultation Type</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="consultType" id="inPerson" value="In Person" required>
+              <label class="form-check-label" for="inPerson">In Person</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="consultType" id="online" value="Online">
+              <label class="form-check-label" for="online">Online</label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="page-section1" id="section7">
+  <div class="container content animate-on-scroll">
+    <div class="row">
+    
+      <!-- Left Column: Doctors + Social Media -->
+      <div class="col-md-6 mb-4">
+        <h2 class="mb-4">Our Doctors</h2>
+
+        <!-- Responsive row of doctors -->
+        <div class="row">
+          <div class="col-12 col-sm-6 mb-4">
+            <h5>Dr. Anjali Rao</h5>
+            <p>Chief Homoeopathic Consultant</p>
+          </div>
+          <div class="col-12 col-sm-6 mb-4">
+            <h5>Dr. Ramesh Kulkarni</h5>
+            <p>Senior Specialist, Child Health</p>
+          </div>
+          <div class="col-12 col-sm-6 mb-4">
+            <h5>Dr. Sneha Patil</h5>
+            <p>Consultant, Skin & Wellness</p>
+          </div>
+        </div>
+
+        <!-- Social Media Icons -->
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-3">
+          <!-- WhatsApp -->
+      <!-- WhatsApp -->
+      <a href="https://wa.me/message/D4EGYZ2K4EOWB1" target="_blank" rel="noopener" title="Go to WhatsApp page" class="social-icons__link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.4054 3.4875C18.1607 1.2375 15.1714 0 11.9946 0C5.4375 0 0.101786 5.33571 0.101786 11.8929C0.101786 13.9875 0.648214 16.0339 1.6875 17.8393L0 24L6.30536 22.3446C8.04107 23.2929 9.99643 23.7911 11.9893 23.7911H11.9946C18.5464 23.7911 24 18.4554 24 11.8982C24 8.72143 22.65 5.7375 20.4054 3.4875ZM11.9946 21.7875C10.2161 21.7875 8.475 21.3107 6.95893 20.4107L6.6 20.1964L2.86071 21.1768L3.85714 17.5286L3.62143 17.1536C2.63036 15.5786 2.11071 13.7625 2.11071 11.8929C2.11071 6.44464 6.54643 2.00893 12 2.00893C14.6411 2.00893 17.1214 3.0375 18.9857 4.90714C20.85 6.77679 21.9964 9.25714 21.9911 11.8982C21.9911 17.3518 17.4429 21.7875 11.9946 21.7875ZM17.4161 14.3839C17.1214 14.2339 15.6589 13.5161 15.3857 13.4196C15.1125 13.3179 14.9143 13.2696 14.7161 13.5696C14.5179 13.8696 13.95 14.5339 13.7732 14.7375C13.6018 14.9357 13.425 14.9625 13.1304 14.8125C11.3839 13.9393 10.2375 13.2536 9.08571 11.2768C8.78036 10.7518 9.39107 10.7893 9.95893 9.65357C10.0554 9.45536 10.0071 9.28393 9.93214 9.13393C9.85714 8.98393 9.2625 7.52143 9.01607 6.92679C8.775 6.34821 8.52857 6.42857 8.34643 6.41786C8.175 6.40714 7.97679 6.40714 7.77857 6.40714C7.58036 6.40714 7.25893 6.48214 6.98571 6.77679C6.7125 7.07679 5.94643 7.79464 5.94643 9.25714C5.94643 10.7196 7.0125 12.1339 7.15714 12.3321C7.30714 12.5304 9.25179 15.5304 12.2357 16.8214C14.1214 17.6357 14.8607 17.7054 15.8036 17.5661C16.3768 17.4804 17.5607 16.8482 17.8071 16.1518C18.0536 15.4554 18.0536 14.8607 17.9786 14.7375C17.9089 14.6036 17.7107 14.5286 17.4161 14.3839Z" />
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#E1306C" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.0027 5.84808C8.59743 5.84808 5.85075 8.59477 5.85075 12C5.85075 15.4053 8.59743 18.1519 12.0027 18.1519C15.4079 18.1519 18.1546 15.4053 18.1546 12C18.1546 8.59477 15.4079 5.84808 12.0027 5.84808ZM12.0027 15.9996C9.80212 15.9996 8.00312 14.2059 8.00312 12C8.00312 9.7941 9.79677 8.00046 12.0027 8.00046C14.2086 8.00046 16.0022 9.7941 16.0022 12C16.0022 14.2059 14.2032 15.9996 12.0027 15.9996ZM19.8412 5.59644C19.8412 6.39421 19.1987 7.03135 18.4062 7.03135C17.6085 7.03135 16.9713 6.38885 16.9713 5.59644C16.9713 4.80402 17.6138 4.16153 18.4062 4.16153C19.1987 4.16153 19.8412 4.80402 19.8412 5.59644ZM23.9157 7.05277C23.8247 5.13063 23.3856 3.42801 21.9775 2.02522C20.5747 0.622429 18.8721 0.183388 16.9499 0.0870135C14.9689 -0.0254238 9.03112 -0.0254238 7.05008 0.0870135C5.1333 0.178034 3.43068 0.617075 2.02253 2.01986C0.614389 3.42265 0.180703 5.12527 0.0843279 7.04742C-0.0281093 9.02845 -0.0281093 14.9662 0.0843279 16.9472C0.175349 18.8694 0.614389 20.572 2.02253 21.9748C3.43068 23.3776 5.12794 23.8166 7.05008 23.913C9.03112 24.0254 14.9689 24.0254 16.9499 23.913C18.8721 23.822 20.5747 23.3829 21.9775 21.9748C23.3803 20.572 23.8193 18.8694 23.9157 16.9472C24.0281 14.9662 24.0281 9.03381 23.9157 7.05277ZM21.3564 19.0728C20.9388 20.1223 20.1303 20.9307 19.0755 21.3537C17.496 21.9802 13.7481 21.8356 12.0027 21.8356C10.2572 21.8356 6.50396 21.9748 4.92984 21.3537C3.88042 20.9361 3.07195 20.1276 2.64897 19.0728C2.02253 17.4934 2.16709 13.7455 2.16709 12C2.16709 10.2546 2.02789 6.50129 2.64897 4.92717C3.06659 3.87776 3.87507 3.06928 4.92984 2.6463C6.50931 2.01986 10.2572 2.16443 12.0027 2.16443C13.7481 2.16443 17.5014 2.02522 19.0755 2.6463C20.1249 3.06392 20.9334 3.8724 21.3564 4.92717C21.9828 6.50665 21.8383 10.2546 21.8383 12C21.8383 13.7455 21.9828 17.4987 21.3564 19.0728Z"/>
+        </svg>
+      </a>
+
+      <!-- YouTube -->
+      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube">
+        <svg width="24" height="24" fill="#FF0000" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a2.87 2.87 0 0 0-2.02-2.02C19.734 3.6 12 3.6 12 3.6s-7.735 0-9.478.566a2.87 2.87 0 0 0-2.02 2.02A29.94 29.94 0 0 0 0 12a29.94 29.94 0 0 0 .502 5.814 2.87 2.87 0 0 0 2.02 2.02c1.743.566 9.478.566 9.478.566s7.734 0 9.478-.566a2.87 2.87 0 0 0 2.02-2.02A29.94 29.94 0 0 0 24 12a29.94 29.94 0 0 0-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://facebook.com/yourpage" target="_blank" title="Facebook">
+        <svg width="24" height="24" fill="#1877F2" viewBox="0 0 24 24">
+          <path d="M24 12.0726C24 5.44354 18.629 0.0725708 12 0.0725708C5.37097 0.0725708 0 5.44354 0 12.0726C0 18.0619 4.38823 23.0264 10.125 23.9274V15.5414H7.07661V12.0726H10.125V9.4287C10.125 6.42144 11.9153 4.76031 14.6574 4.76031C15.9706 4.76031 17.3439 4.99451 17.3439 4.99451V7.94612H15.8303C14.34 7.94612 13.875 8.87128 13.875 9.82015V12.0726H17.2031L16.6708 15.5414H13.875V23.9274C19.6118 23.0264 24 18.0619 24 12.0726Z" />
+        </svg>
+      </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Contact Info -->
+      <div class="col-md-6">
+        <h2 class="mb-4">Contact & Timings</h2>
+
+        <!-- Address & Phone in same row -->
+        <div class="row mb-4">
+          <div class="col-12 col-sm-6 mb-3">
+            <strong>Address:</strong><br>
+            123 Wellness Street,<br>
+            Bengaluru, Karnataka 560001
+          </div>
+          <div class="col-12 col-sm-6 mb-3">
+            <strong>Phone:</strong><br>
+            +91 98765 43210<br>
+            +91 87654 32109
+          </div>
+        </div>
+
+        <!-- Email & Timings in same row -->
+        <div class="row mb-4">
+          <div class="col-12 col-sm-6 mb-3">
+            <strong>Email:</strong><br>
+            contact@homeoclinic.com
+          </div>
+          <div class="col-12 col-sm-6 mb-3">
+            <strong>Timings:</strong><br>
+            Mon - Sat: 10 AM - 7 PM<br>
+            Sunday: Closed
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="about" class="page-section1">
+<div class="container content animate-on-scroll">
+  <h1 class="mb-5" style="color: #fff; padding-top: 120px;">About Us</h1>
+
+    <div class="row gy-4">
+      
+      <!-- Doctor 1 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h4 class="card-title">Dr. Anjali Rao</h4>
+            <p class="card-text">
+              Dr. Anjali is the Chief Homoeopathic Consultant with over 15 years of experience in holistic wellness. Her personalized treatment plans have helped thousands of patients regain their balance and vitality through natural remedies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h4 class="card-title">Dr. Ramesh Kulkarni</h4>
+            <p class="card-text">
+              A Senior Child Health Specialist, Dr. Ramesh is known for his empathetic approach and deep understanding of pediatric care. He focuses on strengthening immunity and overall child development using classical homeopathy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <h4 class="card-title">Dr. Sneha Patil</h4>
+            <p class="card-text">
+              As a Consultant in Skin & Wellness, Dr. Sneha blends traditional remedies with modern diagnostics. She specializes in treating chronic skin conditions and improving inner well-being naturally.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+<!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  document.getElementById("appointmentForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxyDCR6KOHboYUJCeyQKZC0UzBROhCk_CFvJzQbl2N6ufT889Qc6xadLB8G8E1ZrG6rBQ/exec"; // Replace with your Apps Script URL
+
+  const data = {
+    fullName: document.getElementById("fullName").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value,
+    consultType: document.querySelector('input[name="consultType"]:checked').value
+  };
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(res => alert("Form submitted successfully!"))
+  .catch(err => alert("Error submitting form."));
+});
+
+  function showAboutUs() {
+    // Hide all other sections
+    document.querySelectorAll('section').forEach(sec => sec.classList.add('d-none'));
+    
+    // Show About Us section
+    document.getElementById('about').classList.remove('d-none');
+
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showSection(id) {
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
+      section.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
+  }
+
+  // Show home by default on first load
+  window.onload = () => {
+    showSection('home');
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
