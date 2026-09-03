@@ -4493,7 +4493,7 @@
     document.getElementById("appointmentForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbwNrNzdBuTXzoR2egqOe5pP4qX3rTi6KhLeBm8zJUu21-IMrQhog45_kgbrWkmvGb4z/exec"; // Replace with your Apps Script URL
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzlpm4xnpjPL1rMIAfm8c9vA2f9sjTqgSP_rAJvuxpxLM9_wdzIUASFW-Wh8zQhgPRUKQ/exec"; // Replace with your Apps Script URL
 
       const data = {
         fullName: document.getElementById("fullName").value,
@@ -4508,8 +4508,14 @@
         method: 'POST',
         body: JSON.stringify(data)
       })
-        .then(res => alert("Form submitted successfully!"))
-        .catch(err => alert("Error submitting form."));
+        .then(res => {
+          if (!res.ok) throw new Error("Submission failed");
+          alert("Appointment request submitted successfully! We will contact you shortly to confirm your appointment.");
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Sorry, we couldn't submit your appointment request. Please try again or contact the clinic directly.");
+        });
     });
 
     function showPaymentPopup() {
